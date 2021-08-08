@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'merchant dashboard' do
+RSpec.describe 'discount index page' do
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
 
@@ -45,18 +45,7 @@ RSpec.describe 'merchant dashboard' do
     visit merchant_discounts_path(@merchant1)
   end
 
-  it 'displays all bulk discounts and attributes for merchant' do
-    # Merchant Bulk Discounts Index
-    #
-    # As a merchant
-    # When I visit my merchant dashboard
-    # Then I see a link to view all my discounts
-    # When I click this link
-    # Then I am taken to my bulk discounts index page
-    # Where I see all of my bulk discounts including their
-    # percentage discount and quantity thresholds
-    # And each bulk discount listed includes a link to its show page
-
+  it 'displays all bulk discounts and attributes for a merchant' do
     within "#discount-#{@bd_1.id}" do
       expect(page).to have_content(@bd_1.percentage)
       expect(page).to have_content(@bd_1.quantity_threshold)
@@ -73,7 +62,13 @@ RSpec.describe 'merchant dashboard' do
     end
   end
 
-  it 'diplays a link for each discount to its show page' do
-    
+  it 'has a link for each discount to its show page' do
+    click_link('Discount 1')
+
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts/#{@bd_1.id}")
+    expect(page).to have_content(@bd_1.percentage)
+    expect(page).to have_content(@bd_1.quantity_threshold)
+    expect(page).to have_no_content(@bd_2.percentage)
+    expect(page).to have_no_content(@bd_2.quantity_threshold)
   end
 end
