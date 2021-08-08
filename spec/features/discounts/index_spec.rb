@@ -63,6 +63,10 @@ RSpec.describe 'discount index page' do
   end
 
   it 'has a link for each discount to its show page' do
+    expect(page).to have_link('Discount 1')
+    expect(page).to have_link('Discount 2')
+    expect(page).to have_link('Discount 3')
+
     click_link('Discount 1')
 
     expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts/#{@bd_1.id}")
@@ -70,5 +74,15 @@ RSpec.describe 'discount index page' do
     expect(page).to have_content(@bd_1.quantity_threshold)
     expect(page).to have_no_content(@bd_2.percentage)
     expect(page).to have_no_content(@bd_2.quantity_threshold)
+  end
+
+  it "has a section with a header of 'Upcoming Holidays' which has the name and date of the next 3 upcoming US holidays" do
+    expect(page).to have_content('Upcoming Holidays')
+    expect(page).to have_content('Labour Day')
+    expect(page).to have_content('2021-09-06')
+    expect(page).to have_content('Columbus Day')
+    expect(page).to have_content('2021-10-11')
+    expect(page).to have_content('Veterans Day')
+    expect(page).to have_content('2021-11-11')
   end
 end
