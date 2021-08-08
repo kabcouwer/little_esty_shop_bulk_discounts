@@ -16,9 +16,10 @@
   </div>
 
   <ul class='mr-auto col-sm-4'>
-    <% @discounts.each do |discount| %>
+    <% @discounts.each_with_index do |discount, index| %>
+      <% index += 1 %>
       <section id="discount-<%= discount.id %>">
-          <li><p><%= discount.percentage %>% Off for <%= discount.quantity_threshold %> Items</p></li>
+        <li><%= link_to "Discount #{index}", merchant_discount_path(@merchant, discount) %> <%= discount.percentage %>% Off for <%= discount.quantity_threshold %> Items</li>
       </section>
     <% end %>
   </ul>
