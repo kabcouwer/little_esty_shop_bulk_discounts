@@ -24,4 +24,14 @@
     <% end %>
   </ul>
 
+  <div class="row">
+    <p class='ml-auto col-sm-5'>Upcoming Holidays</p>
+  </div>
+
+  <ul class='mr-auto col-sm-4'>
+    <% @holidays.each do |holiday| %>
+      <li><%= holiday[:name] %> on <%= holiday[:date] %></li>
+    <% end %>
+  </ul>
+
 </body>
