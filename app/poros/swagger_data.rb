@@ -5,8 +5,8 @@ class SwaggerData
     holidays.each_with_index.filter_map do |hol, i|
       if i < 3
         hash = {}
-        hash[:name] = hol["name"]
-        hash[:date] = hol["date"]
+        hash[:name] = hol['name']
+        hash[:date] = hol['date']
         holiday_array << hash
       end
     end
