@@ -70,10 +70,6 @@ RSpec.describe 'discount index page' do
     click_link('Discount 1')
 
     expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/#{@bd_1.id}")
-    expect(page).to have_content(@bd_1.percentage)
-    expect(page).to have_content(@bd_1.quantity_threshold)
-    expect(page).to have_no_content(@bd_2.percentage)
-    expect(page).to have_no_content(@bd_2.quantity_threshold)
   end
 
   it "has 'Upcoming Holidays' section which has the name and date of next 3 upcoming US holidays" do
