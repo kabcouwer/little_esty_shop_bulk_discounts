@@ -76,7 +76,7 @@ RSpec.describe 'discount index page' do
     expect(page).to have_no_content(@bd_2.quantity_threshold)
   end
 
-  it "has a section with a header of 'Upcoming Holidays' which has the name and date of the next 3 upcoming US holidays" do
+  it "has 'Upcoming Holidays' section which has the name and date of next 3 upcoming US holidays" do
     expect(page).to have_content('Upcoming Holidays')
     expect(page).to have_content('Labour Day')
     expect(page).to have_content('2021-09-06')
@@ -110,5 +110,24 @@ RSpec.describe 'discount index page' do
       expect(page).to have_content(new_bd.percentage)
       expect(page).to have_content(new_bd.quantity_threshold)
     end
+  end
+
+  it 'has a link to delete each bulk discount' do
+    within "#discount-#{@bd_1.id}" do
+      expect(page).to have_link('Delete')
+    end
+
+    within "#discount-#{@bd_2.id}" do
+      expect(page).to have_link('Delete')
+    end
+  end
+
+  it 'can delete a bulk discount' do
+    within "#discount-#{@bd_1.id}" do
+      click_link('Delete')
+    end
+
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts")
+    expect(page).to have_no_css("#discount-#{@bd_1.id}")
   end
 end
