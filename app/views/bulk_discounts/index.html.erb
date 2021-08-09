@@ -5,7 +5,7 @@
       <li><%= link_to 'Dashboard', merchant_dashboard_index_path, class: 'link_1', style: 'pull-right' %>
       <li><%= link_to 'Items', merchant_items_path, class: 'link_1', style: 'pull-right' %>
       <li><%= link_to 'Invoices', merchant_invoices_path, class: 'link_1', style: 'pull-right' %>
-      <li><%= link_to 'Discounts', merchant_discounts_path, class: 'link_1', style: 'pull-right' %>
+      <li><%= link_to 'Discounts', merchant_bulk_discounts_path, class: 'link_1', style: 'pull-right' %>
     </ul>
   </nav>
 </div>
@@ -19,10 +19,12 @@
     <% @discounts.each_with_index do |discount, index| %>
       <% index += 1 %>
       <section id="discount-<%= discount.id %>">
-        <li><%= link_to "Discount #{index}", merchant_discount_path(@merchant, discount) %> <%= discount.percentage %>% Off for <%= discount.quantity_threshold %> Items</li>
+        <li><%= link_to "Discount #{index}", merchant_bulk_discount_path(@merchant, discount) %> <%= discount.percentage %>% Off for <%= discount.quantity_threshold %> Items</li>
       </section>
     <% end %>
   </ul>
+
+  <%= link_to 'Create New Bulk Discount', new_merchant_bulk_discount_path(@merchant) %>
 
   <div class="row">
     <p class='ml-auto col-sm-5'>Upcoming Holidays</p>

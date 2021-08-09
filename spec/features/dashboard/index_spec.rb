@@ -123,6 +123,6 @@ RSpec.describe 'merchant dashboard' do
   it 'has a usable discount link that redirects to its index page' do
     click_link('Discounts')
 
-    expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts")
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts")
   end
 end

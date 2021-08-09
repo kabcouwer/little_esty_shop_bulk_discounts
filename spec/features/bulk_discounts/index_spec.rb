@@ -42,7 +42,7 @@ RSpec.describe 'discount index page' do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: @invoice_7.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
 
-    visit merchant_discounts_path(@merchant1)
+    visit merchant_bulk_discounts_path(@merchant1)
   end
 
   it 'displays all bulk discounts and attributes for a merchant' do
@@ -69,7 +69,7 @@ RSpec.describe 'discount index page' do
 
     click_link('Discount 1')
 
-    expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts/#{@bd_1.id}")
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/#{@bd_1.id}")
     expect(page).to have_content(@bd_1.percentage)
     expect(page).to have_content(@bd_1.quantity_threshold)
     expect(page).to have_no_content(@bd_2.percentage)
@@ -84,5 +84,31 @@ RSpec.describe 'discount index page' do
     expect(page).to have_content('2021-10-11')
     expect(page).to have_content('Veterans Day')
     expect(page).to have_content('2021-11-11')
+  end
+
+  it 'has a link to create a new discount' do
+    click_link('Create New Bulk Discount')
+
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/new")
+  end
+
+  it 'can create a new bulk discount' do
+    click_link('Create New Bulk Discount')
+
+    fill_in('bulk_discount_percentage', with: 50)
+    fill_in('bulk_discount_quantity_threshold', with: 50)
+
+    click_button('Submit')
+
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts")
+
+    new_bd = BulkDiscount.last
+
+    within "#discount-#{new_bd.id}" do
+      expect(page).to have_no_content(@bd_3.percentage)
+      expect(page).to have_no_content(@bd_3.quantity_threshold)
+      expect(page).to have_content(new_bd.percentage)
+      expect(page).to have_content(new_bd.quantity_threshold)
+    end
   end
 end
