@@ -12,14 +12,10 @@
 
 <body>
   <div class="row">
-    <p class='col-12'><%= @item.name %></p>
+    <p class='col-12'>Discount</p>
   </div>
 
-
-  <p><%= @item.description %></p><br/>
-
-  <p>Price: $<%= @item.unit_price %></p>
-
-  <strong><%= link_to "Update Item", edit_merchant_item_path(@merchant, @item) %></strong>
-
+  <p>Discount Percentage: <%= @discount.percentage %>%</p>
+  <p>Quantity Threshold: <%= @discount.quantity_threshold %> items</p>
+  <%= link_to 'Edit Bulk Discount', edit_merchant_bulk_discount_path(@merchant, @discount) %>
 </body>

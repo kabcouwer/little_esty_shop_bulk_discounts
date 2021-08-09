@@ -1,0 +1,39 @@
+<div class="nav-container">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <p class="navbar-text"><%= @merchant.name %></p>
+    <ul class="nav navbar-nav">
+      <li><%= link_to 'Dashboard', merchant_dashboard_index_path, class: 'link_1', style: 'pull-right' %>
+      <li><%= link_to 'Items', merchant_items_path, class: 'link_1', style: 'pull-right' %>
+      <li><%= link_to 'Invoices', merchant_invoices_path, class: 'link_1', style: 'pull-right' %>
+      <li><%= link_to 'Discounts', merchant_bulk_discounts_path, class: 'link_1', style: 'pull-right' %>
+    </ul>
+  </nav>
+</div>
+
+<body>
+  <div class="row">
+    <p class='mr-auto col-sm-5'>Bulk Discounts</p>
+  </div>
+
+  <ul class='mr-auto col-sm-4'>
+    <% @discounts.each_with_index do |discount, index| %>
+      <% index += 1 %>
+      <section id="discount-<%= discount.id %>">
+        <li><%= link_to "Discount #{index}", merchant_bulk_discount_path(@merchant, discount) %> <%= discount.percentage %>% Off for <%= discount.quantity_threshold %> Items <%= link_to 'Delete', merchant_bulk_discount_path(@merchant, discount), method: :delete %></li>
+      </section>
+    <% end %>
+  </ul>
+
+  <%= link_to 'Create New Bulk Discount', new_merchant_bulk_discount_path(@merchant) %>
+
+  <div class="row">
+    <p class='ml-auto col-sm-5'>Upcoming Holidays</p>
+  </div>
+
+  <ul class='mr-auto col-sm-4'>
+    <% @holidays.each do |holiday| %>
+      <li><%= holiday[:name] %> on <%= holiday[:date] %></li>
+    <% end %>
+  </ul>
+
+</body>
