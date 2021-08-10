@@ -68,6 +68,7 @@ RSpec.describe Invoice, type: :model do
       @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 15, unit_price: 7777, status: 1)
       @ii_4 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_10.id, quantity: 15, unit_price: 1000, status: 1)
 
+      expect(@invoice_1.discount?).to eq(true)
       expect((@invoice_1.total_revenue / 100.00).round(2)).to eq(1381.59)
       expect((@invoice_1.discounted_revenue / 100.00).round(2)).to eq(1018.62)
     end
