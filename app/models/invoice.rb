@@ -13,4 +13,19 @@ class Invoice < ApplicationRecord
   def total_revenue
     invoice_items.sum("unit_price * quantity")
   end
+
+  def discounted_revenue
+    savings = 0
+    invoice_items.each do |ii|
+      if ii.discount_applied? == true
+        discount = ii.find_bulk_discount
+        savings += (discount.percentage * ii.quantity * ii.unit_price)
+      end
+    end
+    total_revenue - savings
+  end
+
+  def discount?
+    total_revenue > discounted_revenue
+  end
 end
