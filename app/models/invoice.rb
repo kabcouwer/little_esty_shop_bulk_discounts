@@ -24,4 +24,8 @@ class Invoice < ApplicationRecord
     end
     total_revenue - savings
   end
+
+  def discount?
+    total_revenue > discounted_revenue
+  end
 end
