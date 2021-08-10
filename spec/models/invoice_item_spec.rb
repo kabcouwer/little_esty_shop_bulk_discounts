@@ -25,8 +25,8 @@ RSpec.describe InvoiceItem, type: :model do
         @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 5, unit_price: 10, status: 2)
         @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 5, unit_price: 10, status: 1)
 
-        expect(@ii_1.discount_applied?(@merchant1)).to eq(false)
-        expect(@ii_11.discount_applied?(@merchant1)).to eq(false)
+        expect(@ii_1.discount_applied?).to eq(false)
+        expect(@ii_11.discount_applied?).to eq(false)
       end
 
       it "finds discount_applied? for example 2" do
@@ -39,8 +39,8 @@ RSpec.describe InvoiceItem, type: :model do
         @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 10, status: 2)
         @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 5, unit_price: 10, status: 1)
 
-        expect(@ii_1.discount_applied?(@merchant1)).to eq(true)
-        expect(@ii_11.discount_applied?(@merchant1)).to eq(false)
+        expect(@ii_1.discount_applied?).to eq(true)
+        expect(@ii_11.discount_applied?).to eq(false)
       end
 
       it "finds discount_applied? for example 3" do
@@ -54,10 +54,10 @@ RSpec.describe InvoiceItem, type: :model do
         @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 12, unit_price: 10, status: 2)
         @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 15, unit_price: 10, status: 1)
 
-        expect(@ii_1.discount_applied?(@merchant1)).to eq(true)
-        expect(@ii_11.discount_applied?(@merchant1)).to eq(true)
-        expect(@ii_1.bulk_discount(@merchant1)).to eq(@bd_1)
-        expect(@ii_11.bulk_discount(@merchant1)).to eq(@bd_2)
+        expect(@ii_1.discount_applied?).to eq(true)
+        expect(@ii_11.discount_applied?).to eq(true)
+        expect(@ii_1.find_bulk_discount).to eq(@bd_1)
+        expect(@ii_11.find_bulk_discount).to eq(@bd_2)
       end
 
       it "finds discount_applied? for example 4" do
@@ -71,10 +71,10 @@ RSpec.describe InvoiceItem, type: :model do
         @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 12, unit_price: 10, status: 2)
         @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 15, unit_price: 10, status: 1)
 
-        expect(@ii_1.discount_applied?(@merchant1)).to eq(true)
-        expect(@ii_11.discount_applied?(@merchant1)).to eq(true)
-        expect(@ii_1.bulk_discount(@merchant1)).to eq(@bd_1)
-        expect(@ii_11.bulk_discount(@merchant1)).to eq(@bd_1)
+        expect(@ii_1.discount_applied?).to eq(true)
+        expect(@ii_11.discount_applied?).to eq(true)
+        expect(@ii_1.find_bulk_discount).to eq(@bd_1)
+        expect(@ii_11.find_bulk_discount).to eq(@bd_1)
       end
 
       it "finds discount_applied? for example 5" do
@@ -91,11 +91,11 @@ RSpec.describe InvoiceItem, type: :model do
         @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 15, unit_price: 10, status: 1)
         @ii_4 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_10.id, quantity: 15, unit_price: 10, status: 1)
 
-        expect(@ii_1.discount_applied?(@merchant1)).to eq(true)
-        expect(@ii_11.discount_applied?(@merchant1)).to eq(true)
-        expect(@ii_4.discount_applied?(@merchant2)).to eq(false)
-        expect(@ii_1.bulk_discount(@merchant1)).to eq(@bd_1)
-        expect(@ii_11.bulk_discount(@merchant1)).to eq(@bd_2)
+        expect(@ii_1.discount_applied?).to eq(true)
+        expect(@ii_11.discount_applied?).to eq(true)
+        expect(@ii_4.discount_applied?).to eq(false)
+        expect(@ii_1.find_bulk_discount).to eq(@bd_1)
+        expect(@ii_11.find_bulk_discount).to eq(@bd_2)
       end
     end
   end
