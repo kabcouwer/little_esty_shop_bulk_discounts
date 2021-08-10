@@ -15,7 +15,7 @@
     <p class='col-12'>Discount</p>
   </div>
 
-  <p>Discount Percentage: <%= @discount.percentage %>%</p>
+  <p>Discount Percentage: <%= @discount.percentage * 100 %>%</p>
   <p>Quantity Threshold: <%= @discount.quantity_threshold %> items</p>
   <%= link_to 'Edit Bulk Discount', edit_merchant_bulk_discount_path(@merchant, @discount) %>
 </body>

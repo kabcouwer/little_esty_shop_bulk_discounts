@@ -19,7 +19,7 @@
     <% @discounts.each_with_index do |discount, index| %>
       <% index += 1 %>
       <section id="discount-<%= discount.id %>">
-        <li><%= link_to "Discount #{index}", merchant_bulk_discount_path(@merchant, discount) %> <%= discount.percentage %>% Off for <%= discount.quantity_threshold %> Items <%= link_to 'Delete', merchant_bulk_discount_path(@merchant, discount), method: :delete %></li>
+        <li><%= link_to "Discount #{index}", merchant_bulk_discount_path(@merchant, discount) %> <%= discount.percentage * 100 %>% Off for <%= discount.quantity_threshold %> Items <%= link_to 'Delete', merchant_bulk_discount_path(@merchant, discount), method: :delete %></li>
       </section>
     <% end %>
   </ul>

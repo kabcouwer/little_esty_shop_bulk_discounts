@@ -4,9 +4,9 @@ RSpec.describe 'discount index page' do
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
 
-    @bd_1 = @merchant1.bulk_discounts.create!(percentage: 20.0, quantity_threshold: 10)
-    @bd_2 = @merchant1.bulk_discounts.create!(percentage: 10.0, quantity_threshold: 5)
-    @bd_3 = @merchant1.bulk_discounts.create!(percentage: 15.0, quantity_threshold: 10)
+    @bd_1 = @merchant1.bulk_discounts.create!(percentage: 0.20, quantity_threshold: 10)
+    @bd_2 = @merchant1.bulk_discounts.create!(percentage: 0.10, quantity_threshold: 5)
+    @bd_3 = @merchant1.bulk_discounts.create!(percentage: 0.15, quantity_threshold: 10)
 
 
     @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
@@ -46,9 +46,9 @@ RSpec.describe 'discount index page' do
   end
 
   it 'displays percentage and quantity_threshold for discount' do
-    expect(page).to have_content(@bd_1.percentage)
+    expect(page).to have_content(@bd_1.percentage * 100)
     expect(page).to have_content(@bd_1.quantity_threshold)
-    expect(page).to have_no_content(@bd_2.percentage)
+    expect(page).to have_no_content(@bd_2.percentage * 100)
     expect(page).to have_no_content(@bd_2.quantity_threshold)
   end
 
@@ -57,7 +57,7 @@ RSpec.describe 'discount index page' do
 
     expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/#{@bd_1.id}/edit")
 
-    updated_percentage = 25.5
+    updated_percentage = 0.25
     updated_quantity_threshold = 13
 
     fill_in('bulk_discount_percentage', with: updated_percentage)
@@ -65,7 +65,16 @@ RSpec.describe 'discount index page' do
     click_button('Submit')
 
     expect(current_path).to eq("/merchant/#{@merchant1.id}/bulk_discounts/#{@bd_1.id}")
-    expect(page).to have_content(updated_percentage)
+    expect(page).to have_content(updated_percentage * 100)
     expect(page).to have_content(updated_quantity_threshold)
+  end
+
+  it '' do
+    # Merchant Invoice Show Page: Total Revenue and Discounted Revenue
+    #
+    # As a merchant
+    # When I visit my merchant invoice show page
+    # Then I see the total revenue for my merchant from this invoice (not including discounts)
+    # And I see the total discounted revenue for my merchant from this invoice which includes bulk discounts in the calculation
   end
 end

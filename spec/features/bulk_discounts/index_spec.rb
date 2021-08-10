@@ -4,9 +4,9 @@ RSpec.describe 'discount index page' do
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
 
-    @bd_1 = @merchant1.bulk_discounts.create!(percentage: 20.0, quantity_threshold: 10)
-    @bd_2 = @merchant1.bulk_discounts.create!(percentage: 10.0, quantity_threshold: 5)
-    @bd_3 = @merchant1.bulk_discounts.create!(percentage: 15.0, quantity_threshold: 10)
+    @bd_1 = @merchant1.bulk_discounts.create!(percentage: 0.20, quantity_threshold: 10)
+    @bd_2 = @merchant1.bulk_discounts.create!(percentage: 0.10, quantity_threshold: 5)
+    @bd_3 = @merchant1.bulk_discounts.create!(percentage: 0.15, quantity_threshold: 10)
 
 
     @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
@@ -47,17 +47,17 @@ RSpec.describe 'discount index page' do
 
   it 'displays all bulk discounts and attributes for a merchant' do
     within "#discount-#{@bd_1.id}" do
-      expect(page).to have_content(@bd_1.percentage)
+      expect(page).to have_content(@bd_1.percentage * 100)
       expect(page).to have_content(@bd_1.quantity_threshold)
     end
 
     within "#discount-#{@bd_2.id}" do
-      expect(page).to have_content(@bd_2.percentage)
+      expect(page).to have_content(@bd_2.percentage * 100)
       expect(page).to have_content(@bd_2.quantity_threshold)
     end
 
     within "#discount-#{@bd_3.id}" do
-      expect(page).to have_content(@bd_3.percentage)
+      expect(page).to have_content(@bd_3.percentage * 100)
       expect(page).to have_content(@bd_3.quantity_threshold)
     end
   end
@@ -101,9 +101,9 @@ RSpec.describe 'discount index page' do
     new_bd = BulkDiscount.last
 
     within "#discount-#{new_bd.id}" do
-      expect(page).to have_no_content(@bd_3.percentage)
+      expect(page).to have_no_content(@bd_3.percentage * 100)
       expect(page).to have_no_content(@bd_3.quantity_threshold)
-      expect(page).to have_content(new_bd.percentage)
+      expect(page).to have_content(new_bd.percentage * 100)
       expect(page).to have_content(new_bd.quantity_threshold)
     end
   end
