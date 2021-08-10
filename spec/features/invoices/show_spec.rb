@@ -58,39 +58,39 @@ RSpec.describe 'invoices show' do
     visit merchant_invoice_path(@merchant1, @invoice_1)
   end
 
-  it "shows the invoice information" do
+  it 'shows the invoice information' do
     expect(page).to have_content(@invoice_1.id)
     expect(page).to have_content(@invoice_1.status)
     expect(page).to have_content(@invoice_1.created_at.strftime("%A, %B %-d, %Y"))
   end
 
-  it "shows the customer information" do
+  it 'shows the customer information' do
     expect(page).to have_content(@customer_1.first_name)
     expect(page).to have_content(@customer_1.last_name)
     expect(page).to_not have_content(@customer_2.last_name)
   end
 
-  it "shows the item information" do
+  it 'shows the item information' do
     expect(page).to have_content(@item_1.name)
     expect(page).to have_content(@ii_1.quantity)
     expect(page).to have_content(@ii_1.unit_price / 100.00)
     expect(page).to_not have_content(@ii_4.unit_price)
   end
 
-  it "shows the total revenue for this invoice" do
+  it 'shows the total revenue for this invoice' do
     expect(page).to have_content('$1,098.40')
   end
 
-  it "shows a select field to update the invoice status" do
+  it 'shows a select field to update the invoice status' do
     within("#the-status-#{@ii_1.id}") do
-      page.select("cancelled")
-      click_button "Update Invoice"
+      page.select('cancelled')
+      click_button 'Update Invoice'
 
-      expect(page).to have_content("cancelled")
+      expect(page).to have_content('cancelled')
     end
 
-    within("#current-invoice-status") do
-      expect(page).to_not have_content("in progress")
+    within('#current-invoice-status') do
+      expect(page).to_not have_content('in progress')
     end
   end
 
