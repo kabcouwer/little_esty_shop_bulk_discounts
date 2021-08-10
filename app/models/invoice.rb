@@ -14,19 +14,14 @@ class Invoice < ApplicationRecord
     invoice_items.sum("unit_price * quantity")
   end
 
-  def discount(discount)
-    invoice_items.sum("unit_price * quantity") * discount.percentage
-  end
-
-  # def discount(discount)
-  #   wip = invoice_items
-  #   .joins(item: [merchant: :bulk_discounts])
-  #   .select('invoice_items.*, sum(discount.percentage * unit_price * quantity) as discount')
-  #   .group(:id)
-  #   binding.pry
-  # end
-
-  def discounted_revenue(discount)
-    total_revenue - discount(discount)
+  def discounted_revenue
+    savings = 0
+    invoice_items.each do |ii|
+      if ii.discount_applied? == true
+        discount = ii.find_bulk_discount
+        savings += (discount.percentage * ii.quantity * ii.unit_price)
+      end
+    end
+    total_revenue - savings
   end
 end
