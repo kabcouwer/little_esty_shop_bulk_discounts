@@ -15,7 +15,8 @@ class InvoiceItem < ApplicationRecord
     Invoice.order(created_at: :asc).find(invoice_ids)
   end
 
-  def discount_applied?(merchant)
+  def discount_applied?
+    merchant = Merchant.where('id = ?', item.merchant_id).first
     if merchant.bulk_discounts.empty?
       false
     else
@@ -23,10 +24,10 @@ class InvoiceItem < ApplicationRecord
     end
   end
 
-  def bulk_discount(merchant)
-    merchant
-    .bulk_discounts
-    .where('quantity_threshold <= ?', self.quantity)
-    .order(percentage: :desc).first
+  def find_bulk_discount
+    merchant = Merchant.where('id = ?', item.merchant_id).first
+    merchant.bulk_discounts
+            .where('quantity_threshold <= ?', self.quantity)
+            .order(percentage: :desc).first
   end
 end
