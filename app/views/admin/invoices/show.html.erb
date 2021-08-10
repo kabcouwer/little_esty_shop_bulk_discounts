@@ -44,12 +44,14 @@
 
     <tbody>
       <% @invoice.invoice_items.each do |i| %>
+      <div id="ii-<%=i.id%>">
         <tr class="tr">
           <td style="text-align:center"><%= i.item.name %></td>
           <td style="text-align:center"><%= i.quantity %></td>
           <td style="text-align:center"><%= number_to_currency(i.unit_price / 100.00) %></td>
           <td style="text-align:center"><%= i.status%></td><br/>
         </tr>
+      </div>
       <% end %>
     </tbody>
   </table>
